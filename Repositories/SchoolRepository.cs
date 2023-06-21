@@ -16,12 +16,16 @@ namespace SchoolSystem.Repositories
 
         public async Task<SchoolModel> FindOne(int id)
         {
-            return await _dbContext.School.FirstOrDefaultAsync(x => x.Id == id);
+            return await _dbContext.School
+            .Include(x => x.Teacher)
+            .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<List<SchoolModel>> List()
         {
-            return await _dbContext.School.ToListAsync();
+            return await _dbContext.School
+            .Include(x => x.Teacher)
+            .ToListAsync();
         }
 
         public async Task<SchoolModel> Create(SchoolModel teacher)
